@@ -22,7 +22,7 @@
                 \Idno\Core\site()->addPageHandler('/pages/([A-Za-z0-9\-\_]+)/?', 'IdnoPlugins\StaticPages\Pages\View');
 
                 \Idno\Core\site()->template()->extendTemplate('admin/menu/items', 'staticpages/admin/menu');
-                \Idno\Core\site()->template()->prependTemplate('shell/toolbar/content', 'staticpages/toolbar', true);
+                \Idno\Core\site()->template()->prependTemplate('shell/toolbar/links', 'staticpages/toolbar', true);
 
             }
 
