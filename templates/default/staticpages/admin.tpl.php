@@ -6,7 +6,7 @@
         </h1>
 
         <p class="explanation">
-            Create categorized static pages to inform your site users and provide general information.
+            Pages are a great way to add content to your site that you want to keep separate from your stream of normal posts and updates.  Common examples of pages include an about page, a contact page, or a resume.
         </p>
 
     </div>
@@ -83,7 +83,7 @@
         </h2>
 
         <p class="explanation">
-            Categories allow you to sort your pages thematically.
+            If you plan on adding many pages, you may want to group them under categories.  However, you don’t have to assign a page to a category.
         </p>
     </div>
 </div>
