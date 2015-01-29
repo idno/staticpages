@@ -65,10 +65,11 @@
                         Body </label>  
                 </div>
                                      
-                <p style="text-align: right">        
+                <p style="text-align: right">
                     <small>
-                        <a href="#" onclick="$('#body').destroy(); $('#plainTextSwitch').hide(); $('#richTextSwitch').show(); return false;" id="plainTextSwitch">Switch to plain text editor</a>
+                        <a href="#" onclick="tinymce.EditorManager.execCommand('mceRemoveEditor',true, 'body'); $('#plainTextSwitch').hide(); $('#richTextSwitch').show(); return false;" id="plainTextSwitch">Switch to plain text editor</a>
                         <a href="#" onclick="makeRich('#body'); $('#plainTextSwitch').show(); $('#richTextSwitch').hide(); return false;" id="richTextSwitch" style="display:none">Switch to rich text editor</a></small></p>
+                </p>
                     
                         <textarea name="body" id="body" placeholder="Tell your story"
                                   class="span8 bodyInput mentionable wysiwyg"><?= htmlspecialchars($this->autop($body)) ?></textarea>
@@ -125,43 +126,34 @@
         ;
 
         function makeRich(container) {
-            $(container).summernote({
-                height: "15em",
-                toolbar: [
-                    ['style', ['bold', 'italic', 'underline', 'strikethrough', 'clear']],
-                    ['fancy', ['link', 'picture']],
-                    /* Images forthcoming */
-                    ['fontsize', ['fontsize']],
-                    ['color', ['color']],
-                    ['para', ['ul', 'ol', 'paragraph']],
-                    ['codeview', ['fullscreen']]
-                ],
-                onImageUpload: function(files, editor, welEditable)
-                {
-                    console.log(files);
-                    uploadFileAsync(files[0], editor, welEditable);
+            $(container).tinymce({
+                selector: 'textarea',
+                theme: 'modern',
+                skin: 'light',
+                statusbar: false,
+                menubar: false,
+                toolbar: 'styleselect | bold italic | link image | blockquote bullist numlist | alignleft aligncenter alignright | code',
+                plugins: 'code link image autoresize',
+                file_picker_callback: function (callback, value, meta) {
+                    filePickerDialog(callback, value, meta);
                 }
             });
         }
 
-        function uploadFileAsync(file, editor, welEditable) {
-            data = new FormData();
-            data.append("file", file);
-            $.ajax({
-                data: data,
-                type: "POST",
-                url: "<?=\Idno\Core\site()->config()->getURL()?>file/upload/",
-                cache: false,
-                contentType: false,
-                processData: false,
-                success: function (url) {
-                    console.log("Success! " + url);
-                    editor.insertImage(welEditable, url);
+        function filePickerDialog(callback, value, meta) {
+            tinymce.activeEditor.windowManager.open({
+                title: 'File Manager',
+                url: '<?=\Idno\Core\site()->config()->getDisplayURL()?>file/picker/?type=' + meta.filetype,
+                width: 650,
+                height: 550
+            }, {
+                oninsert: function (url) {
+                    callback(url);
                 }
             });
         }
         
-        $('.selectpicker').selectpicker();
+        //$('.selectpicker').selectpicker();
 
     </script>
 <?= $this->draw('entity/edit/footer'); ?>
