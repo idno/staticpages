@@ -91,6 +91,7 @@
                 $title       = \Idno\Core\site()->currentPage()->getInput('title');
                 $category    = \Idno\Core\site()->currentPage()->getInput('category');
                 $forward_url = \Idno\Core\site()->currentPage()->getInput('forward_url');
+                $hide_title  = \Idno\Core\site()->currentPage()->getInput('hide_title');
 
                 if ($staticpages = \Idno\Core\site()->plugins()->get('StaticPages')) {
                     /* @var IdnoPlugins\StaticPages\Main $staticpages */
@@ -101,6 +102,7 @@
                             $this->body        = $body;
                             $this->category    = $category;
                             $this->forward_url = $forward_url;
+                            $this->hide_title  = $hide_title;
                             $this->setAccess('PUBLIC');
 
                             if ($result = $this->save()) {

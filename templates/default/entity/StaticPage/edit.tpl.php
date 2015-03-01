@@ -7,6 +7,7 @@
         $title = $vars['object']->getTitle();
         $body = $vars['object']->body;
         $forward_url = $vars['object']->forward_url;
+        $hide_title = $vars['object']->hide_title;
     }
 
     if ($title == 'Untitled') {
@@ -46,19 +47,41 @@
                     </label>
                 </p>
 
-                
+                <p>
+                    <small><a href="#" onclick="$('#moreoptions').show(); return false;">See more options</a></small>
+                </p>
+                <div id="moreoptions" <?php
+                    if (empty($hide_title) && empty($forward_url)) {
+                        ?>
+                        style="display:none"
+                    <?php
+                    }
+                        ?>>
 
-<!-- Forward URL -->
-               <!-- <p>
-                    <label>
-                        Forward URL<br/>
-                        <small>Most of the time, you should leave this blank. Include a URL here if you want users to
-                            be forwarded to an external page.</small><br>
-                        <input type="text" name="forward_url" id="forward_url" placeholder="Website to forward users to"
-                               value="<?= htmlspecialchars($forward_url) ?>" class="span8"/>
-                    </label>
-                </p>-->
-<!---->
+                    <p>
+                        <label>
+                            Forward URL<br/>
+                            <small>Most of the time, you should leave this blank. Include a URL here if you want users to
+                                be forwarded to an external page instead of displaying page content.</small><br>
+                            <input type="text" name="forward_url" id="forward_url" placeholder="Website to forward users to"
+                                   value="<?= htmlspecialchars($forward_url) ?>" class="span8"/>
+                        </label>
+                        <label>
+                            Show the page title as a heading?
+                            <select name="hide_title" >
+                                <option value="0">Yes</option>
+                                <option value="1" <?php
+
+                                    if (!empty($hide_title)) {
+                                        echo 'selected';
+                                    }
+
+                                ?>>No</option>
+                            </select>
+                        </label>
+                    </p>
+
+                </div>
 
                 <div class="pages span3">
                     <label>

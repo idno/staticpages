@@ -33,9 +33,11 @@
 
             }
 
+            if (empty($vars['object']->hide_title)) {
         ?>
         <h1 class="p-name" style="margin-bottom: 1em"><?=$vars['object']->getTitle()?></h1>
         <?php
+            }
 
             if (!empty($vars['object']->forward_url)) {
 
