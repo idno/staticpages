@@ -19,7 +19,7 @@
 
         <div class="row">
 
-            <div class="span8 offset2 edit-pane">
+            <div class="col-md-8 col-md-offset-2 edit-pane">
 
 
                 <?php
@@ -40,51 +40,14 @@
 
                 ?>
                 <p>
-                    <label>
-                        Title<br/>
+                    <label for="title">
+                        Title</label>
                         <input type="text" name="title" id="title" placeholder="Give it a title"
-                               value="<?= htmlspecialchars($title) ?>" class="span8"/>
-                    </label>
+                               value="<?= htmlspecialchars($title) ?>" class="form-control"/>
                 </p>
 
-                <p>
-                    <small><a href="#" onclick="$('#moreoptions').show(); return false;">See more options</a></small>
-                </p>
-                <div id="moreoptions" <?php
-                    if (empty($hide_title) && empty($forward_url)) {
-                        ?>
-                        style="display:none"
-                    <?php
-                    }
-                        ?>>
-
-                    <p>
-                        <label>
-                            Forward URL<br/>
-                            <small>Most of the time, you should leave this blank. Include a URL here if you want users to
-                                be forwarded to an external page instead of displaying page content.</small><br>
-                            <input type="text" name="forward_url" id="forward_url" placeholder="Website to forward users to"
-                                   value="<?= htmlspecialchars($forward_url) ?>" class="span8"/>
-                        </label>
-                        <label>
-                            Show the page title as a heading?
-                            <select name="hide_title" >
-                                <option value="0">Yes</option>
-                                <option value="1" <?php
-
-                                    if (!empty($hide_title)) {
-                                        echo 'selected';
-                                    }
-
-                                ?>>No</option>
-                            </select>
-                        </label>
-                    </p>
-
-                </div>
-
-                <div class="pages span3">
-                    <label>
+                <div class="pages col-md-3">
+                    <label for="body">
                         Body </label>  
                 </div>
                                      
@@ -95,16 +58,16 @@
                 </p>
                     
                         <textarea name="body" id="body" placeholder="Tell your story"
-                                  class="span8 bodyInput mentionable wysiwyg"><?= htmlspecialchars($this->autop($body)) ?></textarea>
+                                  class="form-control bodyInput mentionable wysiwyg"><?= htmlspecialchars($this->autop($body)) ?></textarea>
 
                     
                
 
                 <?=$this->draw('entity/tags/input');?>
                 
-                <p>
+                <div class="page-cat">
                     <label>
-                        Parent category<br>
+                        Parent category</label><br>
                         <select name="category" class="selectpicker">
                             <option <?php if ($vars['category'] == 'No Category') { echo 'selected'; } ?>>No Category</option>
                             <?php
@@ -121,8 +84,65 @@
 
                             ?>
                         </select>
-                    </label>
+
+                </div>
+                
+                <p>
+                    <small><a href="#" onclick="$('#moreoptions').show(); return false;"><i class="fa fa-plus"></i>
+ Show advanced options</a></small>
                 </p>
+                <div id="moreoptions" <?php
+                    if (empty($hide_title) && empty($forward_url)) {
+                        ?>
+                        style="display:none"
+                    <?php
+                    }
+                        ?>>
+
+                    <div>
+                        <label for="forward_url">
+                            Forward URL</label>
+                            <input type="text" name="forward_url" id="forward_url" placeholder="Website to forward users to"
+                                   value="<?= htmlspecialchars($forward_url) ?>" class="form-control"/>
+                            <small>Most of the time, you should leave this blank. Include a URL here if you want users to
+                                be forwarded to an external page instead of displaying page content.</small>
+                    </div>
+                    <div class="page-cat">
+
+                        <label>
+                            Show the page title as a heading?</label><br>
+                            <!--<select name="hide_title" >
+                                <option value="0">Yes</option>
+                                <option value="1" <?php
+
+                                    if (!empty($hide_title)) {
+                                        echo 'selected';
+                                    }
+
+                                ?>>No</option>
+                            </select>-->
+
+								<label class="radio-inline">
+								<input type="radio" name="optionsRadios" id="yes" value="0">
+								Yes
+								</label>
+
+								<label class="radio-inline">
+								<input type="radio" name="optionsRadios" id="no" value="1" <?php
+
+                                    if (!empty($hide_title)) {
+                                        echo 'selected';
+                                    }
+
+                                ?>>
+								No
+								</label>
+
+
+                    </div>
+
+                </div>
+
 
                 <p class="button-bar " style="text-align: right">
                     <?= \Idno\Core\site()->actions()->signForm('/staticpages/edit') ?>

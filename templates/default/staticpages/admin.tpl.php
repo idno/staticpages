@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="span10 offset1">
+    <div class="col-md-10 col-md-offset-1">
         <?= $this->draw('admin/menu') ?>
         <h1>
             Pages
@@ -13,7 +13,7 @@
 </div>
 
 <div class="row">
-    <div class="span10 offset1">
+    <div class="col-md-10 col-md-offset-1">
         <p class="pages">
             <a href="<?= \Idno\Core\site()->config()->getDisplayURL() ?>staticpages/edit/?category=<?= urlencode($category) ?>"
                class="btn btn-primary btn-add">Add new page</a>
@@ -21,7 +21,7 @@
     </div>
 </div>
 <div class="row">
-    <div class="span10 offset1">
+    <div class="col-md-10 col-md-offset-1">
         <?php
 
             if (!empty($vars['pages'])) {
@@ -77,7 +77,7 @@
     </div>
 </div>
 <div class="row">
-    <div class="span10 offset1">
+    <div class="col-md-10 col-md-offset-1">
         <h2>
             Categories
         </h2>
@@ -88,7 +88,7 @@
     </div>
 </div>
 <div class="row">
-    <div class="span10 offset1">
+    <div class="col-md-10 col-md-offset-1">
 
         <p class="pages" id="add-category-button">
             <a href="#" class="btn btn-primary btn-add" onclick="$('#add-category-button').hide(); $('#add-category').show(); return false;">Add new category</a>
@@ -96,12 +96,12 @@
     </div>
 </div>
 <div class="row">
-    <div class="span10 offset1">
+    <div class="col-md-10 col-md-offset-1">
 
         <div id="add-category" style="display:none">
 
-            <form action="<?=\Idno\Core\site()->config()->getDisplayURL()?>admin/staticpages/add/" method="post">
-                <input type="text" name="category" placeholder="Name of category to add">
+            <form class="form-inline" action="<?=\Idno\Core\site()->config()->getDisplayURL()?>admin/staticpages/add/" method="post">
+                <input id="pages-add" class="form-control" type="text" name="category" placeholder="Name of category to add">
                 <input type="submit" class="btn btn-primary btn-page" value="Add">
                 <?= \Idno\Core\site()->actions()->signForm('/admin/staticpages/add') ?>
             </form>
@@ -131,10 +131,10 @@
                                 <td>
                                     <div id="category-name-<?=$unique_id?>"><?= $category ?></div>
                                     <div id="edit-category-<?=$unique_id?>" style="display: none">
-                                        <form action="<?=\Idno\Core\site()->config()->getDisplayURL()?>admin/staticpages/edit/" method="post">
-                                            <input type="text" name="new_category" value="<?=htmlspecialchars($category)?>">
+                                        <form class="form-inline" action="<?=\Idno\Core\site()->config()->getDisplayURL()?>admin/staticpages/edit/" method="post">
+                                            <input class="form-control" type="text" name="new_category" value="<?=htmlspecialchars($category)?>">
                                             <input type="submit" value="Save" class="btn btn-primary btn-page">
-                                            <input type="hidden" name="category" value="<?=htmlspecialchars($category)?>">
+                                            <input class="form-control" type="hidden" name="category" value="<?=htmlspecialchars($category)?>">
                                             <?= \Idno\Core\site()->actions()->signForm('/admin/staticpages/edit') ?>
                                         </form>
                                     </div>
@@ -148,7 +148,7 @@
                                         if ($category != 'No Category') {
 
                                             ?>
-                                            <icon class="icon-pencil"></icon> 
+                                            <i class="fa fa-pencil"></i>
                                             <a href="#" onclick="$('#category-name-<?=$unique_id?>').hide(); $('#edit-category-<?=$unique_id?>').show(); return false;">Edit</a>
                                         <?php
 
@@ -161,7 +161,7 @@
 
                                         if ($category != 'No Category') {
 
-                                    ?><icon class="icon-trash"></icon>
+                                    ?><i class="fa fa-trash-o"></i>
                                     <?=  \Idno\Core\site()->actions()->createLink(\Idno\Core\site()->config()->getDisplayURL() . 'admin/staticpages/delete/', 'Delete', array('category' => $category), array('method' => 'POST', 'class' => 'edit', 'confirm' => true, 'confirm-text' => 'Are you sure you want to permanently delete this category?'));?>
                                         <?php
 

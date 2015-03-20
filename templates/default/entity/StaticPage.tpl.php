@@ -6,9 +6,9 @@
 
         ?>
        <div class="row">
-        <div class="span10" style="text-align: right;">
+        <div class="col-md-12" style="text-align: right;">
         <span>
-            <i class="icon-cog"></i> <a href="<?=\Idno\Core\site()->config()->getURL()?>admin/staticpages/">Manage pages</a>
+            <i class="fa fa-cog"></i> <a href="<?=\Idno\Core\site()->config()->getURL()?>admin/staticpages/">Manage pages</a>
         </span>
 	    <?php
 
@@ -16,8 +16,8 @@
 
 ?>
 
-        <span style="padding-left: 25px;"><icon class="icon-pencil"></icon> <a href="<?=$vars['object']->getEditURL()?>" class="edit">Edit</a></span>
-        <span style="padding-left: 25px;"><icon class="icon-trash"></icon>
+        <span style="padding-left: 25px;"><i class="fa fa-pencil"></i> <a href="<?=$vars['object']->getEditURL()?>" class="edit">Edit</a></span>
+        <span style="padding-left: 25px;"><i class="fa fa-trash-o"></i>
         <?=  \Idno\Core\site()->actions()->createLink($vars['object']->getDeleteURL(), 'Delete', array(), array('method' => 'POST', 'class' => 'edit', 'confirm' => true, 'confirm-text' => 'Are you sure you want to permanently delete this entry?'));?></span>
 
 <?php
@@ -52,29 +52,5 @@
 
         ?>
         <?php echo $this->autop($this->parseURLs($this->parseHashtags($vars['object']->body),$rel)); ?>
-        
-<!--<div class="row" style="margin-top: 3em;">
-	<div class="span8">
-        <p>
-            <a href="<?=\Idno\Core\site()->config()->getURL()?>admin/staticpages/" class="btn btn-primary btn-add">Manage pages</a>
-        </p>
-        </div>
-		<div class="span2" style="text-align: right; padding-top: 8px;">
-	    <?php
 
-    if ($vars['object']->canEdit()) {
-
-?>
-
-        <span><icon class="icon-pencil"></icon> <a href="<?=$vars['object']->getEditURL()?>" class="edit">Edit</a></span>
-        <span style="padding-left: 35px;"><icon class="icon-trash"></icon>
-        <?=  \Idno\Core\site()->actions()->createLink($vars['object']->getDeleteURL(), 'Delete', array(), array('method' => 'POST', 'class' => 'edit', 'confirm' => true, 'confirm-text' => 'Are you sure you want to permanently delete this entry?'));?></span>
-
-<?php
-
-    }
-
-?>	    	    
-    </div>
-        </div>-->
     </div>

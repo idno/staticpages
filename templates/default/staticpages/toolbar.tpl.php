@@ -13,11 +13,13 @@
                         if (!empty($pages)) {
                             foreach($pages as $page) {
                                 ?>
-                                <ul class="nav">
-                                    <li>
-                                        <a href="<?= $page->getURL() ?>"><?= htmlspecialchars($page->getTitle()) ?></a>
-                                    </li>
-                                </ul>
+                                <li>
+                                	<ul class="nav">
+                                    	<li>
+                                        	<a href="<?= $page->getURL() ?>"><?= htmlspecialchars($page->getTitle()) ?></a>
+											</li>
+                                	</ul>
+                                </li>
                                 <?php
                             }
                         }
@@ -26,6 +28,7 @@
 
                         ?>
 
+                       <li>
                         <ul class="nav">
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -56,6 +59,8 @@
                                 </ul>
                             </li>
                         </ul>
+                        
+                       </li>
 
                     <?php
                     }
