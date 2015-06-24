@@ -3,6 +3,8 @@ StaticPages
 
 A Known plugin that allows you to add static pages of content to your Known site.
 
+**DEPRECATED** - This is now part of the main Known repository at https://github.com/idno/known/
+
 Installation
 ------------
 
