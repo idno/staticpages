@@ -1,134 +1,160 @@
-<?= $this->draw('entity/edit/header'); ?>
+<?php echo $this->draw('entity/edit/header'); ?>
 <?php
 
     /* @var \Idno\Core\Template $this */
 
-    if (!empty($vars['object'])) {
-        $title = $vars['object']->getTitle();
-        $body = $vars['object']->body;
-        $forward_url = $vars['object']->forward_url;
-        $hide_title = $vars['object']->hide_title;
-    }
+if (!empty($vars['object'])) {
+    $title       = $vars['object']->getTitle();
+    $body        = $vars['object']->body;
+    $forward_url = $vars['object']->forward_url;
+    $hide_title  = $vars['object']->hide_title;
+}
 
-    if ($title == 'Untitled') {
-        $title = '';
-    }
+if ($title == 'Untitled') {
+    $title = '';
+}
 
 ?>
-    <form action="<?= $vars['object']->getURL() ?>" method="post" >
+    <form action="<?php echo $vars['object']->getURL() ?>" method="post">
 
         <div class="row">
 
-            <div class="span8 offset2 edit-pane">
+            <div class="col-md-8 col-md-offset-2 edit-pane">
 
 
                 <?php
 
-                    if (empty($vars['object']->_id)) {
+                if (empty($vars['object']->_id)) {
 
-                        ?>
-                        <h4>New Page</h4>
+                    ?>
+                        <h4><?php echo \Idno\Core\Idno::site()->language()->_('New Page'); ?></h4>
                     <?php
 
-                    } else {
+                } else {
 
-                        ?>
-                        <h4>Edit Page</h4>
+                    ?>
+                        <h4><?php echo \Idno\Core\Idno::site()->language()->_('Edit Page'); ?></h4>
                     <?php
 
-                    }
+                }
 
                 ?>
                 <p>
-                    <label>
-                        Title<br/>
-                        <input type="text" name="title" id="title" placeholder="Give it a title"
-                               value="<?= htmlspecialchars($title) ?>" class="span8"/>
-                    </label>
+                    <label for="title">
+                        <?php echo \Idno\Core\Idno::site()->language()->_('Title'); ?></label>
+                    <input type="text" name="title" id="title" placeholder="<?php echo \Idno\Core\Idno::site()->language()->_('Give it a title'); ?>"
+                           value="<?php echo htmlspecialchars($title) ?>" class="form-control"/>
                 </p>
 
-                <p>
-                    <small><a href="#" onclick="$('#moreoptions').show(); return false;">See more options</a></small>
+
+
+                <?php echo $this->__([
+                    'name' => 'body',
+                    'value' => $vars['object']->body,
+                    'wordcount' => false,
+                    'class' => 'wysiwyg',
+                    'height' => 500,
+                    'placeholder' => \Idno\Core\Idno::site()->language()->_('Share something brilliant...'),
+                    'label' => \Idno\Core\Idno::site()->language()->_('Body')
+                ])->draw('forms/input/richtext')?>
+
+                <?php echo $this->draw('entity/tags/input'); ?>
+
+                <div class="page-cat">
+                    <label>
+                        <?php echo \Idno\Core\Idno::site()->language()->_('Parent category'); ?></label><br>
+                    <select name="category" class="selectpicker">
+                        <option <?php if ($vars['category'] == 'No Category') {
+                            echo 'selected';
+} ?>><?php echo \Idno\Core\Idno::site()->language()->_('No Category'); ?>
+                        </option>
+                        <?php
+
+                        if (!empty($vars['categories'])) {
+                            foreach ($vars['categories'] as $category) {
+
+                                ?>
+                                    <option <?php if ($category == $vars['category']) {
+                                        echo 'selected';
+} ?>><?php echo htmlspecialchars($category) ?></option>
+                                <?php
+
+                            }
+                        }
+
+                        ?>
+                    </select>
+
+                </div>
+
+                <p id="show-options">
+                    <small><a href="#" onclick="$('#moreoptions').toggle(); $('#show-options').hide(); return false;"><i
+                                class="fa fa-plus"></i>
+                            <?php echo \Idno\Core\Idno::site()->language()->_('Show advanced options'); ?></a></small>
                 </p>
                 <div id="moreoptions" <?php
-                    if (empty($hide_title) && empty($forward_url)) {
-                        ?>
+                if (empty($hide_title) && empty($forward_url)) {
+                    ?>
                         style="display:none"
                     <?php
-                    }
-                        ?>>
+                }
+                ?>>
 
-                    <p>
-                        <label>
-                            Forward URL<br/>
-                            <small>Most of the time, you should leave this blank. Include a URL here if you want users to
-                                be forwarded to an external page instead of displaying page content.</small><br>
-                            <input type="text" name="forward_url" id="forward_url" placeholder="Website to forward users to"
-                                   value="<?= htmlspecialchars($forward_url) ?>" class="span8"/>
+                    <p id="hide-options">
+                        <small><a href="#"
+                                  onclick="$('#moreoptions').toggle(); $('#show-options').show(); return false;"><i
+                                    class="fa fa-minus"></i>
+                                <?php echo \Idno\Core\Idno::site()->language()->_('Hide advanced options'); ?></a></small>
+                    </p>
+
+                    <div>
+                        <p>
+                            <label for="forward_url">
+                                <?php echo \Idno\Core\Idno::site()->language()->_('Forward URL'); ?></label>
+                            <input type="text" name="forward_url" id="forward_url"
+                                   placeholder="<?php echo \Idno\Core\Idno::site()->language()->_('Website to forward users to'); ?>"
+                                   value="<?php echo htmlspecialchars($forward_url) ?>" class="form-control"/>
+                            <small><?php echo \Idno\Core\Idno::site()->language()->_('Most of the time, you should leave this blank. Include a URL here if you want users to be forwarded to an external page instead of displaying page content.'); ?></small>
+                        </p>
+                    </div>
+                    <p style="margin-bottom: 20px">
+                        <strong><?php echo \Idno\Core\Idno::site()->language()->_('Show the page title as a heading?'); ?></strong><br>
+                        <label class="radio-inline">
+                            <input type="radio" name="hide_title" id="title-heading" value="0" <?php
+
+                            if (empty($hide_title)) {
+                                echo 'checked';
+                            }
+
+                            ?>>
+                            Yes
                         </label>
-                        <label>
-                            Show the page title as a heading?
-                            <select name="hide_title" >
-                                <option value="0">Yes</option>
-                                <option value="1" <?php
+                        <label class="radio-inline">
+                            <input type="radio" name="hide_title" id="title-heading" value="1" <?php
 
-                                    if (!empty($hide_title)) {
-                                        echo 'selected';
-                                    }
+                            if (!empty($hide_title)) {
+                                echo 'checked';
+                            }
 
-                                ?>>No</option>
-                            </select>
+                            ?>>
+                            No
                         </label>
                     </p>
 
+                    <div class="page-cat">
+
+
+                    </div>
+
                 </div>
 
-                <div class="pages span3">
-                    <label>
-                        Body </label>  
-                </div>
-                                     
-                <p style="text-align: right">
-                    <small>
-                        <a href="#" onclick="tinymce.EditorManager.execCommand('mceRemoveEditor',true, 'body'); $('#plainTextSwitch').hide(); $('#richTextSwitch').show(); return false;" id="plainTextSwitch">Switch to plain text editor</a>
-                        <a href="#" onclick="makeRich('#body'); $('#plainTextSwitch').show(); $('#richTextSwitch').hide(); return false;" id="richTextSwitch" style="display:none">Switch to rich text editor</a></small></p>
-                </p>
-                    
-                        <textarea name="body" id="body" placeholder="Tell your story"
-                                  class="span8 bodyInput mentionable wysiwyg"><?= htmlspecialchars($this->autop($body)) ?></textarea>
-
-                    
-               
-
-                <?=$this->draw('entity/tags/input');?>
-                
-                <p>
-                    <label>
-                        Parent category<br>
-                        <select name="category" class="selectpicker">
-                            <option <?php if ($vars['category'] == 'No Category') { echo 'selected'; } ?>>No Category</option>
-                            <?php
-
-                                if (!empty($vars['categories'])) {
-                                    foreach($vars['categories'] as $category) {
-
-                            ?>
-                                        <option <?php if ($category == $vars['category']) { echo 'selected'; } ?>><?=htmlspecialchars($category)?></option>
-                            <?php
-
-                                    }
-                                }
-
-                            ?>
-                        </select>
-                    </label>
-                </p>
+                <?php echo $this->draw('content/extra'); ?>
+                <?php echo $this->draw('content/access'); ?>
 
                 <p class="button-bar " style="text-align: right">
-                    <?= \Idno\Core\site()->actions()->signForm('/staticpages/edit') ?>
-                    <input type="button" class="btn btn-cancel" value="Cancel" onclick="hideContentCreateForm();"/>
-                    <input type="submit" class="btn btn-primary" value="Publish"/>
-                    <?= $this->draw('content/access'); ?>
+                    <?php echo \Idno\Core\Idno::site()->actions()->signForm('/staticpages/edit') ?>
+                    <input type="button" class="btn btn-cancel" value="<?php echo \Idno\Core\Idno::site()->language()->_('Cancel'); ?>" onclick="hideContentCreateForm();"/>
+                    <input type="submit" class="btn btn-primary" value="<?php echo \Idno\Core\Idno::site()->language()->_('Publish'); ?>"/>
                 </p>
 
             </div>
@@ -157,9 +183,9 @@
                 menubar: false,
                 toolbar: 'styleselect | bold italic | link image | blockquote bullist numlist | alignleft aligncenter alignright | code',
                 plugins: 'code link image autoresize',
-                relative_urls : false,
-                remove_script_host : false,
-                convert_urls : true,
+                relative_urls: false,
+                remove_script_host: false,
+                convert_urls: true,
                 file_picker_callback: function (callback, value, meta) {
                     filePickerDialog(callback, value, meta);
                 }
@@ -169,7 +195,7 @@
         function filePickerDialog(callback, value, meta) {
             tinymce.activeEditor.windowManager.open({
                 title: 'File Manager',
-                url: '<?=\Idno\Core\site()->config()->getDisplayURL()?>file/picker/?type=' + meta.filetype,
+                url: '<?php echo \Idno\Core\Idno::site()->config()->getDisplayURL()?>filepicker/?type=' + meta.filetype,
                 width: 650,
                 height: 550
             }, {
@@ -178,8 +204,8 @@
                 }
             });
         }
-        
+
         //$('.selectpicker').selectpicker();
 
     </script>
-<?= $this->draw('entity/edit/footer'); ?>
+<?php echo $this->draw('entity/edit/footer');
