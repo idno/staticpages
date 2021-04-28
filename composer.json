@@ -2,7 +2,7 @@
     "name": "idno/staticpages",
     "description": "Host static pages in Known.",
     "type": "known-plugin",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "require": {
         "composer/installers": "~1.0"
     },
